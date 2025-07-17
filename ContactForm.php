@@ -21,6 +21,23 @@ function validateInput($data, $fieldName) {
 
     return($retval);
 }
+function validateEmail($data, $fieldName) {
+    global $errorCount;
+
+    if (empty($data)) {
+        echo "\"$fieldName\" is a requied field.<br />\n";
+        ++$errorCount;
+        $retval = "";
+    } // same as the first function
+    else {
+        $retval = filter_var($data, FILTER_SANITIZE_EMAIL);
+
+        IF (!filter_var($retval, FILTER_SANITIZE_EMAIL)) {
+            echo "\"$fieldName\" is not a valid e-mail address.<br />\n";
+        }
+    }// makes $retval = $data filtered amd checks if $retval is a valid e-mail
+return($retval);
+}
 ?>
 </body>
 </html>
