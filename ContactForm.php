@@ -49,10 +49,28 @@ function displayForm($Sender, $Email, $Subject, $Message) {
             <input type="text" name="Subject" value="<?php echo $Subject; ?>" /></p>
         <p>Message:
             <textarea name="Message"><?php echo $Message; ?></textarea></p>
-        <p><input type="reset" value="Clear Form" />&nbsp: &nbsp;
+        <p><input type="reset" value="Clear Form" />&nbsp; &nbsp;
             <input type="submit" name="Submit" value="Send Form" /> </p>
     </form>
  <?php } // function makes a form and inputs your information as variables 
+ $showForm = true;
+ $errorCount = 0;
+ $Sender = "";
+ $Email = "";
+ $Subject = "";
+ $Message = "";
+ 
+ if (isset($_POST['Submit'])) {
+    $Sender = validateInput($_POST['Sender'],"Your Name");
+    $Email = validateEmail($_POST['Email'],"Your E-mail");
+    $Subject = validateInput($_POST['Subject'],"Subject");
+    $Message = validateInput($_POST['Message'],"Message");
+    if ($errorCount === 0) {
+        $showForm = false;
+    } else {
+        $showForm = true;
+    }
+ }
 ?>
 </body>
 </html>
