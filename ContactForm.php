@@ -13,7 +13,7 @@ function validateInput($data, $fieldName) {
         echo "\"$fieldName\" is a requied field.<br />\n";
         ++$errorCount;
         $retval = "";
-    } // checks if data is empty, and if it is empty it reminds you to fill it out and increments $errorCount
+    } // checks if $data is empty, and if it is empty it reminds you to fill $fieldName out and increments $errorCount
     else {
         $retval = trim($data);
         $retval = stripslashes($retval);
