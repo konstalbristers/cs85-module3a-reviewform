@@ -71,6 +71,23 @@ function displayForm($Sender, $Email, $Subject, $Message) {
         $showForm = true;
     }
  }
+if ($showForm === true) {
+    if ($errorCount > 0) {
+        echo "<p>Please re-enter the form information below.</p>\n";
+        displayForm($Sender, $Email, $Subject, $Message);
+    } // checks if $showForm is true and if $errorCount is over 1 to display the form 
+} else {
+    $SenderAddress "$Sender <$Email>";
+    $Headers = "From: $SenderAddress\nCC: $SenderAddress\n";
+
+    $result = mail("recipient@example.com", $Subject, $Message, $Headers);
+
+    if ($result) {
+        echo "<p>Your message has been sent. Thank you, " . $Sender . "</p>\n";
+    } else {
+        echo "<p>There was an error sending your message, " . $Sender . ".</p>\n";
+    }
+}// sends email to the recipients email address and runs an if statement to check if the email was sent succesfully
 ?>
 </body>
 </html>
