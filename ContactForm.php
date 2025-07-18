@@ -25,17 +25,17 @@ function validateEmail($data, $fieldName) {
     global $errorCount;
 
     if (empty($data)) {
-        echo "\"$fieldName\" is a requied field.<br />\n";
+        echo "\"$fieldName\" is a required field.<br />\n";
         ++$errorCount;
         $retval = "";
     } // same as the first function
     else {
         $retval = filter_var($data, FILTER_SANITIZE_EMAIL);
 
-        IF (!filter_var($retval, FILTER_SANITIZE_EMAIL)) {
+        if (!filter_var($retval, FILTER_SANITIZE_EMAIL)) {
             echo "\"$fieldName\" is not a valid e-mail address.<br />\n";
         }
-    }// makes $retval = $data filtered amd checks if $retval is a valid e-mail
+    }// makes $retval = $data filtered and checks if $retval is a valid e-mail
 return($retval);
 }
 function displayForm($Sender, $Email, $Subject, $Message) {
@@ -77,7 +77,7 @@ if ($showForm === true) {
         displayForm($Sender, $Email, $Subject, $Message);
     } // checks if $showForm is true and if $errorCount is over 1 to display the form 
 } else {
-    $SenderAddress "$Sender <$Email>";
+    $SenderAddress = "$Sender <$Email>";
     $Headers = "From: $SenderAddress\nCC: $SenderAddress\n";
 
     $result = mail("recipient@example.com", $Subject, $Message, $Headers);
@@ -88,6 +88,31 @@ if ($showForm === true) {
         echo "<p>There was an error sending your message, " . $Sender . ".</p>\n";
     }
 }// sends email to the recipients email address and runs an if statement to check if the email was sent succesfully
+
+// Reflection:
+
+/*
+What does each function do?
+- validateInput: Checks if field is empty, trims and removes slashes, counts errors
+- validateEmail: Sanitizes and validates email, counts errors
+- displayForm: Displays form with user’s data if there are errors
+
+How is user input protected?
+- By trimming, removing slashes, sanitizing email. Missing htmlspecialchars.
+
+What were the most confusing parts?
+- Re-checking sanitized email unnecessarily
+- Using global $errorCount instead of function returns
+
+What could be improved?
+- Add htmlspecialchars to prevent XSS.
+- Clean up email validation logic.
+- Use structured error handling, not globals.
+- Use PHPMailer instead of mail().
+
+Why send a copy of the form to the sender?
+- So they know it was sent, have a record, and trust the process.
+*/
 ?>
 </body>
 </html>
